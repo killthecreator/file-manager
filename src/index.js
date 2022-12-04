@@ -4,8 +4,8 @@ import {homedir} from 'os';
 import {createInterface} from 'readline';
 import {join} from 'path';
 
-import {changePath} from './pathChanger.js';
-import {readCurDir} from './dirReader.js';
+import {changePath} from './nwd/pathChanger.js';
+import {readCurDir} from './nwd/dirReader.js';
 
 /* FILE */
 import {readFile} from './file/fileReader.js';
@@ -60,6 +60,8 @@ rl.on('line', data => {
         case '.exit':
             rl.close();
             break;
+        
+        /* NWD */
         /* GO UP */
         case 'up': 
             curDir = join(curDir, '..');
@@ -72,8 +74,6 @@ rl.on('line', data => {
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
-        
-        /* FILES */
         /* CHANGE PATH */
         case 'cd':
             const newPath = data.slice(3);
@@ -82,6 +82,8 @@ rl.on('line', data => {
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
+        
+        /* FILES */
         /* READ FILE */
         case 'cat':
             const fileToRead = splitStr[1];
