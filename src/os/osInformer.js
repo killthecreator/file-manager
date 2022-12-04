@@ -6,7 +6,12 @@ export const getOSInfo = (parameter) => {
             console.log(JSON.stringify(EOL));
             break;
         case '--cpus':
-            console.log(cpus());
+            const cpusInfo = cpus();
+            console.log(cpusInfo.length);
+            console.log(cpusInfo.map(item => {
+                const itemSplit = item.model.split(' CPU @ ');
+                return {model: itemSplit[0], clockRate: itemSplit[1]};
+            }));
             break;
         case '--homedir':
             console.log(homedir());
