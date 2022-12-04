@@ -32,23 +32,23 @@ npm run start -- --username=your_username
     ```bash
     cat path_to_file
     ```
-    - Create empty file in current working directory (File path should be relative): 
+    - Create empty file in current working directory (New filename should be written like `filename.ext` without the path to it): 
     ```bash
     add new_file_name
     ```
-    - Rename file (File path can be relative or absolute. New filename should be written like `filename.ext` without the path to it): 
+    - Rename file (File path should be relative. New filename should be written like `filename.ext` without the path to it): 
     ```bash
     rn path_to_file new_filename
     ```
-    - Copy file: (File and new directory pathes should be absolute)
+    - Copy file: (File and new directory pathes should be relative)
     ```bash
     cp path_to_file path_to_new_directory
     ```
-    - Move file: (File and new directory pathes should be absolute)
+    - Move file: (File and new directory pathes should be relative)
     ```bash
     mv path_to_file path_to_new_directory
     ```
-    - Delete file (File path can be relative or absolute): 
+    - Delete file (File path should be relative)
     ```bash
     rm path_to_file
     ```
@@ -79,10 +79,10 @@ npm run start -- --username=your_username
     hash path_to_file
     ```
 - Compress and decompress operations  
-    - Compress file using Brotli algorithm (Both pathes should be absolute. File to compress (in second argument) should be written like `filename.br`)
+    - Compress file using Brotli algorithm (Both pathes should be relative. File to compress (in second argument) should be written like `filename.br`)
     ```bash
     compress path_to_file path_to_destination
     ```
-    - Decompress file using Brotli algorithm (Both pathes should be absolute. File to decompress (in first argument) should be written like `filename.br`)
+    - Decompress file using Brotli algorithm (Both pathes should be relative. File to decompress (in first argument) should be written like `filename.ext.br`)
     ```bash
     decompress path_to_file path_to_destination

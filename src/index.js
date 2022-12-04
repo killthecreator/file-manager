@@ -108,7 +108,7 @@ rl.on('line', data => {
         /* COPY FILE */
         case 'cp':
             const [fileToCopy, newDirToCopy] = [splitStr[1], splitStr[2]];
-            copyFile(fileToCopy, newDirToCopy)
+            copyFile(curDir, fileToCopy, newDirToCopy)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
@@ -147,14 +147,14 @@ rl.on('line', data => {
         /* COMPRESS FILE */
         case 'compress':
             const [fileToCompress, compressedDist] = [splitStr[1], splitStr[2]];
-            compressFile(fileToCompress, compressedDist)
+            compressFile(curDir, fileToCompress, compressedDist)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
         /* DECOMPRESS FILE */
         case 'decompress':
             const [fileToDecompress, decompressedDist] = [splitStr[1], splitStr[2]];
-            decompressFile(fileToDecompress, decompressedDist)
+            decompressFile(curDir, fileToDecompress, decompressedDist)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
