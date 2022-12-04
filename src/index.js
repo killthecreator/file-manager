@@ -70,7 +70,7 @@ rl.on('line', data => {
         /* LIST CURRENT DIRECTORY */
         case 'ls':
             readCurDir(curDir)
-                .then(data => console.log(data))
+                .then(data => console.table(data))
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
