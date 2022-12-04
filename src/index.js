@@ -101,7 +101,7 @@ rl.on('line', data => {
         /* RENAME FILE */
         case 'rn':
             const [filePath, newFileName] = [splitStr[1], splitStr[2]];
-            renameFile(filePath, newFileName)
+            renameFile(curDir, filePath, newFileName)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
                 break;
@@ -115,14 +115,14 @@ rl.on('line', data => {
         /* MOVE FILE */
         case 'mv':
             const [fileToMove, newDirToMove] = [splitStr[1], splitStr[2]];
-            moveFile(fileToMove, newDirToMove)
+            moveFile(curDir, fileToMove, newDirToMove)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
         /* DELETE FILE */
         case 'rm': 
             const fileToDelete = splitStr[1];
-            deleteFile(fileToDelete)
+            deleteFile(curDir, fileToDelete)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
