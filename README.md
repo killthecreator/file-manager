@@ -79,10 +79,10 @@ npm run start -- --username=your_username
     hash path_to_file
     ```
 - Compress and decompress operations  
-    - Compress file using Brotli algorithm (Both pathes should be relative. File to compress (in second argument) should be written like `filename.br`)
+    - Compress file using Brotli algorithm (Both pathes should be relative. The second argument is THE PATH to compressed file)
     ```bash
     compress path_to_file path_to_destination
     ```
-    - Decompress file using Brotli algorithm (Both pathes should be relative. File to decompress (in first argument) should be written like `filename.ext.br`)
+    - Decompress file using Brotli algorithm (Both pathes should be relative.The second argument is THE PATH to decompressed file)
     ```bash
     decompress path_to_file path_to_destination
