@@ -2,7 +2,7 @@ import {join} from 'path';
 import {access } from 'fs/promises';
 
 export const changePath = async (curDir, data) => {
-    if (data.startsWith(curDir) || curDir.startsWith(data)) {
+    if (data.includes(':\\')) {
         await access(data);
         return data;
     }
