@@ -15,7 +15,6 @@ npm run start -- --username=your_username
 - To finish the program you should press `ctrl + c` or input `.exit` command into console
 - If you operate with folders/files that contain spaces in their name you should use `""` around the name!
 - If function has two pathes and in some of them folders/files contain spaces you should wrap pathes in `""`, e.g. `"path to file with spaces" "path_to_folder"`
-  `Thank you for using File Manager, Username, goodbye!`
 
 ## Сommands
 
