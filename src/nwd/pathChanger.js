@@ -2,7 +2,7 @@ import {join, sep} from 'path';
 import {access} from 'fs/promises';
 
 export const changePath = async (curDir, path) => {
-    if (path.includes(`:${sep}`)) {
+    if (path.includes(`:`)) {
         await access(path);
         return path;
     }

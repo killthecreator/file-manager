@@ -104,7 +104,6 @@ rl.on('line', data => {
             let filesRenameArr;
             if (filesRenameStr.includes('" "')) filesRenameArr = filesRenameStr.split('" "');
             else filesRenameArr = filesRenameStr.split(' ');
-            console.log(filesRenameArr);
             const [filePath, newFileName] = [filesRenameArr[0], filesRenameArr[1]].map(item => item.replace(/["]+/g, ''));
             renameFile(curDir, filePath, newFileName)
                 .catch(() => console.log('Operation failed'))
