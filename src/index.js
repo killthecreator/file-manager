@@ -155,7 +155,7 @@ rl.on('line', data => {
             if (!splitStr[1]) {
                 console.log('Invalid input');
             } else {
-                const OSParameter = splitStr[1];
+                const OSParameter = data.slice(3).replace(/["]+/g, '');
                 getOSInfo(OSParameter);
             }
             break;
@@ -165,10 +165,10 @@ rl.on('line', data => {
             if (!splitStr[1]) {
                 console.log('Invalid input');
             } else {
-                const fileToHash = splitStr[1];
-                hashFile(fileToHash)
+                const fileToHash = data.slice(5).replace(/["]+/g, '');
+                hashFile(curDir, fileToHash)
                     .then(data => console.log(data))
-                    .catch(() => console.log('Operation failed'));
+                    .catch((err) => console.log(err));
             }
             break;
         
