@@ -1,11 +1,11 @@
-import {join} from 'path';
-import {access } from 'fs/promises';
+import {join, sep} from 'path';
+import {access} from 'fs/promises';
 
-export const changePath = async (curDir, data) => {
-    if (data.includes(':\\')) {
-        await access(data);
-        return data;
+export const changePath = async (curDir, path) => {
+    if (path.includes(`:${sep}`)) {
+        await access(path);
+        return path;
     }
-    await access(join(curDir, data));
-    return join(curDir, data);
+    await access(join(curDir, path));
+    return join(curDir, path);
 };

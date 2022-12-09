@@ -76,7 +76,7 @@ rl.on('line', data => {
             break;
         /* CHANGE PATH */
         case 'cd':
-            const newPath = data.slice(3);
+            const newPath = data.slice(3).replace(/["]+/g, '');
             changePath(curDir, newPath)
                 .then(data => curDir = data)
                 .catch(() => console.log('Operation failed'))
@@ -86,42 +86,55 @@ rl.on('line', data => {
         /* FILES */
         /* READ FILE */
         case 'cat':
-            const fileToRead = splitStr[1];
+            const fileToRead = data.slice(4).replace(/["]+/g, '');
             readFile(curDir, fileToRead)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
         /* CREATE FILE */
         case 'add':
-            const fileToCreate = splitStr[1];
+            const fileToCreate = data.slice(4).replace(/["]+/g, '');
             createFile(curDir, fileToCreate)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
         /* RENAME FILE */
         case 'rn':
-            const [filePath, newFileName] = [splitStr[1], splitStr[2]];
+            const filesRenameStr = data.slice(3);
+            let filesRenameArr;
+            if (filesRenameStr.includes('" "')) filesRenameArr = filesRenameStr.split('" "');
+            else filesRenameArr = filesRenameStr.split(' ');
+            console.log(filesRenameArr);
+            const [filePath, newFileName] = [filesRenameArr[0], filesRenameArr[1]].map(item => item.replace(/["]+/g, ''));
             renameFile(curDir, filePath, newFileName)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
                 break;
         /* COPY FILE */
         case 'cp':
-            const [fileToCopy, newDirToCopy] = [splitStr[1], splitStr[2]];
+            const filesCopyStr = data.slice(3);
+            let filesCopyArr;
+            if (filesCopyStr.includes('" "')) filesCopyArr = filesCopyStr.split('" "');
+            else filesCopyArr = filesCopyStr.split(' ');
+            const [fileToCopy, newDirToCopy] = [filesCopyArr[0], filesCopyArr[1]].map(item => item.replace(/["]+/g, ''));
             copyFile(curDir, fileToCopy, newDirToCopy)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
         /* MOVE FILE */
         case 'mv':
-            const [fileToMove, newDirToMove] = [splitStr[1], splitStr[2]];
+            const filesMoveStr = data.slice(3);
+            let filesMoveArr;
+            if (filesMoveStr.includes('" "')) filesMoveArr = filesMoveStr.split('" "');
+            else filesMoveArr = filesMoveStr.split(' ');
+            const [fileToMove, newDirToMove] = [filesMoveArr[0], filesMoveArr[1]].map(item => item.replace(/["]+/g, ''));
             moveFile(curDir, fileToMove, newDirToMove)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
         /* DELETE FILE */
         case 'rm': 
-            const fileToDelete = splitStr[1];
+            const fileToDelete = data.slice(3).replace(/["]+/g, '');
             deleteFile(curDir, fileToDelete)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
@@ -146,14 +159,22 @@ rl.on('line', data => {
         /* ZIP */
         /* COMPRESS FILE */
         case 'compress':
-            const [fileToCompress, compressedDist] = [splitStr[1], splitStr[2]];
+            const filesCompressStr = data.slice(9);
+            let filesCompressArr;
+            if (filesCompressStr.includes('" "')) filesCompressArr = filesCompressStr.split('" "');
+            else filesCompressArr = filesCompressStr.split(' ');
+            const [fileToCompress, compressedDist] = [filesCompressArr[0], filesCompressArr[1]].map(item => item.replace(/["]+/g, ''));
             compressFile(curDir, fileToCompress, compressedDist)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
             break;
         /* DECOMPRESS FILE */
         case 'decompress':
-            const [fileToDecompress, decompressedDist] = [splitStr[1], splitStr[2]];
+            const filesDecompressStr = data.slice(11);
+            let filesDecompressArr;
+            if (filesDecompressStr.includes('" "')) filesDecompressArr = filesDecompressStr.split('" "');
+            else filesDecompressArr = filesDecompressStr.split(' ');
+            const [fileToDecompress, decompressedDist] = [filesDecompressArr[0], filesDecompressArr[1]].map(item => item.replace(/["]+/g, ''));
             decompressFile(curDir, fileToDecompress, decompressedDist)
                 .catch(() => console.log('Operation failed'))
                 .finally(() => logCurDir());
