@@ -8,7 +8,7 @@ export const getOSInfo = (parameter) => {
         case '--cpus':
             const cpusInfo = cpus();
             console.table(cpusInfo.map(item => {
-                const itemSplit = item.model.split(' CPU @ ');
+                const itemSplit = item.model.split(' @ ');
                 return {'Model': itemSplit[0], 'Clock rate': itemSplit[1]};
             }));
             break;
