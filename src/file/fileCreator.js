@@ -1,11 +1,11 @@
 import {writeFile, access} from 'fs/promises';
-import { join } from 'path';
+import { resolve } from 'path';
 
 export const createFile = async (curDir, fileName) => {
     try {
-        await access(join(curDir, fileName));
+        await access(resolve(curDir, fileName));
         return Promise.reject();
     } catch {
-        await writeFile(join(curDir, fileName), '');
+        await writeFile(resolve(curDir, fileName), '');
     }
 };

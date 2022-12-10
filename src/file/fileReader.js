@@ -1,9 +1,9 @@
 import { createReadStream } from "fs";
 import { readFile as read } from "fs/promises";
-import { join, sep} from "path";
+import { resolve} from "path";
 
 export const readFile = async (curDir, fileName) => {
-  const filePath = join(curDir, ...fileName.split(sep));
+  const filePath = resolve(curDir, fileName);
   await read(filePath); /* Check for file existence/accessibility */
   return new Promise((res) => {
     createReadStream(filePath, "utf8")

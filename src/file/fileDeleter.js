@@ -1,7 +1,7 @@
 import {unlink, access} from 'fs/promises';
-import {join} from 'path';
+import {resolve} from 'path';
 
 export const deleteFile = async (curDir, filePath) => {
-    await access(join(curDir,filePath)); /* Check for file existence/accessibility */
-    await unlink(join(curDir, filePath));
+    await access(resolve(curDir,filePath)); /* Check for file existence/accessibility */
+    await unlink(resolve(curDir, filePath));
 };
