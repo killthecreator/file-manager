@@ -1,10 +1,11 @@
 import { createReadStream } from "fs";
-import { readFile as read } from "fs/promises";
+import {stat} from "fs/promises";
 import { resolve} from "path";
 
 export const readFile = async (curDir, fileName) => {
   const filePath = resolve(curDir, fileName);
-  await read(filePath); /* Check for file existence/accessibility */
+  /* Check that path leads to file, not to directory */
+  if (!(await stat(resolve(filePath))).isFile()) throw Error();
   return new Promise((res) => {
     createReadStream(filePath, "utf8")
       .on("data", (chunck) => console.log(chunck))

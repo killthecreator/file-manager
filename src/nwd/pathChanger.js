@@ -1,7 +1,8 @@
 import {resolve} from 'path';
-import {access} from 'fs/promises';
+import {stat} from 'fs/promises';
 
 export const changePath = async (curDir, path) => {
-    await access(resolve(curDir, path));
+    /* Check that path leads to directory, not to file */
+    if (!(await stat(resolve(curDir, path))).isDirectory()) throw Error();
     return resolve(curDir, path);
 };

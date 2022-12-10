@@ -168,7 +168,7 @@ rl.on('line', data => {
                 const fileToHash = data.slice(5).replace(/["]+/g, '');
                 hashFile(curDir, fileToHash)
                     .then(data => console.log(data))
-                    .catch((err) => console.log(err));
+                    .catch(() => console.log('Operation failed'));
             }
             break;
         
