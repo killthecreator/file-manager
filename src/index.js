@@ -65,6 +65,7 @@ rl.on('line', data => {
         /* GO UP */
         case 'up': 
             curDir = join(curDir, '..');
+            logCurDir();
             break;
         /* LIST CURRENT DIRECTORY */
         case 'ls':
