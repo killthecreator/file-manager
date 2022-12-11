@@ -22,6 +22,6 @@ export const getOSInfo = (parameter) => {
             console.log(arch());
             break;
         default:
-            console.log(`Invalid Operation`);
+            console.log(`Invalid input`);
     }
 };

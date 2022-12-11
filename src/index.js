@@ -87,18 +87,24 @@ rl.on('line', data => {
         case 'cat':
             if (!splitStr[1]) {
                 console.log('Invalid input');
+                logCurDir();
             } else {
                 const fileToRead = data.slice(4).replace(/["]+/g, '');
-                readFile(curDir, fileToRead).catch(() => console.log('Operation failed'));
+                readFile(curDir, fileToRead)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
             }
             break;
         /* CREATE FILE */
         case 'add':
             if (!splitStr[1]) {
                 console.log('Invalid input');
+                logCurDir();
             } else {
                 const fileToCreate = data.slice(4).replace(/["]+/g, '');
-                createFile(curDir, fileToCreate).catch(() => console.log('Operation failed'));
+                createFile(curDir, fileToCreate)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
             }
             break;
         /* RENAME FILE */
@@ -109,9 +115,12 @@ rl.on('line', data => {
             else filesRenameArr = filesRenameStr.split(' ');
             if (filesRenameArr.length !== 2) {
                 console.log('Invalid input');
+                logCurDir();
             } else {
                 const [filePath, newFileName] = [filesRenameArr[0], filesRenameArr[1]].map(item => item.replace(/["]+/g, ''));
-                renameFile(curDir, filePath, newFileName).catch(() => console.log('Operation failed'));
+                renameFile(curDir, filePath, newFileName)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
             }
             break;
         /* COPY FILE */
@@ -122,9 +131,12 @@ rl.on('line', data => {
             else filesCopyArr = filesCopyStr.split(' ');
             if (filesCopyArr.length !== 2) {
                 console.log('Invalid input');
+                logCurDir();
             } else {
                 const [fileToCopy, newDirToCopy] = [filesCopyArr[0], filesCopyArr[1]].map(item => item.replace(/["]+/g, ''));
-                copyFile(curDir, fileToCopy, newDirToCopy).catch(() => console.log('Operation failed'));
+                copyFile(curDir, fileToCopy, newDirToCopy)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
             }
             break;
         /* MOVE FILE */
@@ -135,18 +147,24 @@ rl.on('line', data => {
             else filesMoveArr = filesMoveStr.split(' ');
             if (filesMoveArr.length !== 2) {
                 console.log('Invalid input');
+                logCurDir();
             } else {
                 const [fileToMove, newDirToMove] = [filesMoveArr[0], filesMoveArr[1]].map(item => item.replace(/["]+/g, ''));
-                moveFile(curDir, fileToMove, newDirToMove).catch(() => console.log('Operation failed'));
+                moveFile(curDir, fileToMove, newDirToMove)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
             }
             break;
         /* DELETE FILE */
         case 'rm': 
             if (!splitStr[1]) {
                 console.log('Invalid input');
+                logCurDir();
             } else {
                 const fileToDelete = data.slice(3).replace(/["]+/g, '');
-                deleteFile(curDir, fileToDelete).catch(() => console.log('Operation failed'));
+                deleteFile(curDir, fileToDelete)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
             }
             break;
         
@@ -158,17 +176,20 @@ rl.on('line', data => {
                 const OSParameter = data.slice(3).replace(/["]+/g, '');
                 getOSInfo(OSParameter);
             }
+            logCurDir();
             break;
         
         /*  HASH */
         case 'hash':
             if (!splitStr[1]) {
                 console.log('Invalid input');
+                logCurDir();
             } else {
                 const fileToHash = data.slice(5).replace(/["]+/g, '');
                 hashFile(curDir, fileToHash)
                     .then(data => console.log(data))
-                    .catch(() => console.log('Operation failed'));
+                    .catch(() => console.log('Operation failed'))
+                    .finally(() => logCurDir());
             }
             break;
         
@@ -181,9 +202,12 @@ rl.on('line', data => {
             else filesCompressArr = filesCompressStr.split(' ');
             if (filesCompressArr.length !== 2) {
                 console.log('Invalid input');
+                logCurDir();
             } else {
                 const [fileToCompress, compressedDist] = [filesCompressArr[0], filesCompressArr[1]].map(item => item.replace(/["]+/g, ''));
-                compressFile(curDir, fileToCompress, compressedDist).catch(() => console.log('Operation failed'));
+                compressFile(curDir, fileToCompress, compressedDist)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
             }
             break;
         /* DECOMPRESS FILE */
@@ -194,15 +218,18 @@ rl.on('line', data => {
             else filesDecompressArr = filesDecompressStr.split(' ');
             if (filesDecompressArr.length !== 2) {
                 console.log('Invalid input');
+                logCurDir();
             } else {
                 const [fileToDecompress, decompressedDist] = [filesDecompressArr[0], filesDecompressArr[1]].map(item => item.replace(/["]+/g, ''));
-                decompressFile(curDir, fileToDecompress, decompressedDist).catch(() => console.log('Operation failed'));
+                decompressFile(curDir, fileToDecompress, decompressedDist)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
             }
             break;
         default:
-            console.log(`Invalid Operation`);
+            console.log(`Invalid input`);
+            logCurDir();
     }
-    logCurDir();
 });
 
 
