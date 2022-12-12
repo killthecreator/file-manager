@@ -1,5 +1,5 @@
 import {writeFile, access} from 'fs/promises';
-import { resolve } from 'path';
+import {resolve} from 'path';
 
 export const createFile = async (curDir, fileName) => {
     try {
