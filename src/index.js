@@ -1,0 +1,240 @@
+// npm run start -- --username=Gleb
+import {stdin, stdout} from 'process';
+import {homedir} from 'os';
+import {createInterface} from 'readline';
+import {join} from 'path';
+
+import {changePath} from './nwd/pathChanger.js';
+import {readCurDir} from './nwd/dirReader.js';
+
+/* FILE */
+import {readFile} from './file/fileReader.js';
+import {createFile} from './file/fileCreator.js';
+import {renameFile} from './file/fileRenamer.js';
+import {copyFile} from './file/fileCopier.js';
+import {moveFile} from './file/fileMover.js';
+import {deleteFile} from './file/fileDeleter.js';
+
+/* OS */
+import { getOSInfo } from './os/osInformer.js';
+
+/* HASH */
+import { hashFile } from './hash/fileHasher.js';
+
+/* ZIP */
+import {compressFile} from './zip/fileCompressor.js';
+import { decompressFile } from './zip/fileDecompressor.js';
+
+/* LOGIN */
+if (!process.argv[2] || !process.argv[2].startsWith('--username=')) {
+    stdout.write('You should enter your name!');
+    process.exit();
+}
+const userName = process.argv[2].replace('--username=', '');
+let curDir = homedir();
+/*  */
+
+/* CUR DIR */
+const logCurDir = () => console.log(`You are currently in ${curDir}`);
+
+const rl = createInterface({
+    input: stdin,
+    output: stdout
+});
+
+/* WELCOME */
+rl.write(`Welcome to the File Manager, ${userName}!\n`);
+logCurDir();
+
+/* CLOSE CONDITIONS */
+rl.on('close', () => {
+    rl.write(`Thank you for using File Manager, ${userName}, goodbye!`);
+    process.exit();
+});
+/* INPUTS */
+rl.on('line', data => {
+    const splitStr = data.split(' ');
+
+    switch(splitStr[0]) {
+        /* EXIT */
+        case '.exit':
+            rl.close();
+            break;
+        
+        /* NWD */
+        /* GO UP */
+        case 'up': 
+            curDir = join(curDir, '..');
+            logCurDir();
+            break;
+        /* LIST CURRENT DIRECTORY */
+        case 'ls':
+            readCurDir(curDir)
+                .then(data => console.table(data))
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            break;
+        /* CHANGE PATH */
+        case 'cd':
+            const newPath = data.slice(3).replace(/["]+/g, '');
+            changePath(curDir, newPath)
+                .then(data => curDir = data)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            return;
+        
+        /* FILES */
+        /* READ FILE */
+        case 'cat':
+            if (!splitStr[1]) {
+                console.log('Invalid input');
+                logCurDir();
+            } else {
+                const fileToRead = data.slice(4).replace(/["]+/g, '');
+                readFile(curDir, fileToRead)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            }
+            break;
+        /* CREATE FILE */
+        case 'add':
+            if (!splitStr[1]) {
+                console.log('Invalid input');
+                logCurDir();
+            } else {
+                const fileToCreate = data.slice(4).replace(/["]+/g, '');
+                createFile(curDir, fileToCreate)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            }
+            break;
+        /* RENAME FILE */
+        case 'rn':
+            const filesRenameStr = data.slice(3);
+            let filesRenameArr;
+            if (filesRenameStr.includes('" "')) filesRenameArr = filesRenameStr.split('" "');
+            else filesRenameArr = filesRenameStr.split(' ');
+            if (filesRenameArr.length !== 2) {
+                console.log('Invalid input');
+                logCurDir();
+            } else {
+                const [filePath, newFileName] = [filesRenameArr[0], filesRenameArr[1]].map(item => item.replace(/["]+/g, ''));
+                renameFile(curDir, filePath, newFileName)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            }
+            break;
+        /* COPY FILE */
+        case 'cp':
+            const filesCopyStr = data.slice(3);
+            let filesCopyArr;
+            if (filesCopyStr.includes('" "')) filesCopyArr = filesCopyStr.split('" "');
+            else filesCopyArr = filesCopyStr.split(' ');
+            if (filesCopyArr.length !== 2) {
+                console.log('Invalid input');
+                logCurDir();
+            } else {
+                const [fileToCopy, newDirToCopy] = [filesCopyArr[0], filesCopyArr[1]].map(item => item.replace(/["]+/g, ''));
+                copyFile(curDir, fileToCopy, newDirToCopy)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            }
+            break;
+        /* MOVE FILE */
+        case 'mv':
+            const filesMoveStr = data.slice(3);
+            let filesMoveArr;
+            if (filesMoveStr.includes('" "')) filesMoveArr = filesMoveStr.split('" "');
+            else filesMoveArr = filesMoveStr.split(' ');
+            if (filesMoveArr.length !== 2) {
+                console.log('Invalid input');
+                logCurDir();
+            } else {
+                const [fileToMove, newDirToMove] = [filesMoveArr[0], filesMoveArr[1]].map(item => item.replace(/["]+/g, ''));
+                moveFile(curDir, fileToMove, newDirToMove)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            }
+            break;
+        /* DELETE FILE */
+        case 'rm': 
+            if (!splitStr[1]) {
+                console.log('Invalid input');
+                logCurDir();
+            } else {
+                const fileToDelete = data.slice(3).replace(/["]+/g, '');
+                deleteFile(curDir, fileToDelete)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            }
+            break;
+        
+        /* OS */
+        case 'os':
+            if (!splitStr[1]) {
+                console.log('Invalid input');
+            } else {
+                const OSParameter = data.slice(3).replace(/["]+/g, '');
+                getOSInfo(OSParameter);
+            }
+            logCurDir();
+            break;
+        
+        /*  HASH */
+        case 'hash':
+            if (!splitStr[1]) {
+                console.log('Invalid input');
+                logCurDir();
+            } else {
+                const fileToHash = data.slice(5).replace(/["]+/g, '');
+                hashFile(curDir, fileToHash)
+                    .then(data => console.log(data))
+                    .catch(() => console.log('Operation failed'))
+                    .finally(() => logCurDir());
+            }
+            break;
+        
+        /* ZIP */
+        /* COMPRESS FILE */
+        case 'compress':
+            const filesCompressStr = data.slice(9);
+            let filesCompressArr;
+            if (filesCompressStr.includes('" "')) filesCompressArr = filesCompressStr.split('" "');
+            else filesCompressArr = filesCompressStr.split(' ');
+            if (filesCompressArr.length !== 2) {
+                console.log('Invalid input');
+                logCurDir();
+            } else {
+                const [fileToCompress, compressedDist] = [filesCompressArr[0], filesCompressArr[1]].map(item => item.replace(/["]+/g, ''));
+                compressFile(curDir, fileToCompress, compressedDist)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            }
+            break;
+        /* DECOMPRESS FILE */
+        case 'decompress':
+            const filesDecompressStr = data.slice(11);
+            let filesDecompressArr;
+            if (filesDecompressStr.includes('" "')) filesDecompressArr = filesDecompressStr.split('" "');
+            else filesDecompressArr = filesDecompressStr.split(' ');
+            if (filesDecompressArr.length !== 2) {
+                console.log('Invalid input');
+                logCurDir();
+            } else {
+                const [fileToDecompress, decompressedDist] = [filesDecompressArr[0], filesDecompressArr[1]].map(item => item.replace(/["]+/g, ''));
+                decompressFile(curDir, fileToDecompress, decompressedDist)
+                .catch(() => console.log('Operation failed'))
+                .finally(() => logCurDir());
+            }
+            break;
+        default:
+            console.log(`Invalid input`);
+            logCurDir();
+    }
+});
+
+
+
+
+
+
