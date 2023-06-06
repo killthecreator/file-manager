@@ -3,7 +3,13 @@ import { createInterface } from "readline";
 import { resolve } from "path";
 
 import { homedir } from "os";
-import { getTableData, logFileContent, createFile } from "./utils";
+import {
+  getTableData,
+  logFileContent,
+  createFile,
+  renameFile,
+  getOSInfo,
+} from "./utils";
 
 let curPath = homedir();
 
@@ -41,9 +47,24 @@ const runManager = async () => {
         case "cat":
           logFileContent(resolve(curPath, args[0]));
           break;
-        case 'add':
-            createFile(resolve(curPath, args[0]));
-            break;
+        case "add":
+          createFile(resolve(curPath, args[0]));
+          break;
+        case "rn":
+          renameFile(resolve(curPath, args[0]), resolve(curPath, args[1]));
+          break;
+        case "cp":
+          console.log(1);
+          break;
+        case "mv":
+          console.log(1);
+          break;
+        case "rm":
+          console.log(1);
+          break;
+        case "os":
+          console.log(getOSInfo(args[0]));
+          break;
         default:
           console.log("Invalid input");
           break;
@@ -51,10 +72,9 @@ const runManager = async () => {
     } catch {
       console.log("Operation failed");
     } finally {
-        if (command !== '.exit') {
-            console.log(`You are currently in ${curPath}`);
-        }
-     
+      if (command !== ".exit") {
+        console.log(`You are currently in ${curPath}`);
+      }
     }
   });
 
