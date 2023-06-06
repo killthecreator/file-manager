@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node ."
+    "start": "node --experimental-specifier-resolution=node ."
   },
   "repository": {
     "type": "git",
@@ -16,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/killthecreator/file-manager/issues"
   },
-  "homepage": "https://github.com/killthecreator/file-manager#readme",
-  "devDependencies": {
-    "@types/node": "^20.2.5"
-  }
+  "homepage": "https://github.com/killthecreator/file-manager#readme"
 }

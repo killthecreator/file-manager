@@ -1,7 +1,7 @@
 import { readdir, stat } from "fs/promises";
 import { resolve } from "path";
 
-const getTableData = async (curPath) => {
+export const getTableData = async (curPath) => {
   const files = await readdir(curPath);
   const filesData = (
     await Promise.all(
@@ -28,4 +28,3 @@ const getTableData = async (curPath) => {
   return filesData;
 };
 
-export default getTableData;

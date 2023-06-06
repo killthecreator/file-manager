@@ -3,7 +3,7 @@ import { createInterface } from "readline";
 import { resolve } from "path";
 
 import { homedir } from "os";
-import getTableData from "./utils/ls";
+import { getTableData, logFileContent, createFile } from "./utils";
 
 let curPath = homedir();
 
@@ -26,6 +26,9 @@ const runManager = async () => {
 
     try {
       switch (command) {
+        case ".exit":
+          rl.close();
+          break;
         case "up":
           curPath = resolve(curPath, "..");
           break;
@@ -33,9 +36,14 @@ const runManager = async () => {
           curPath = resolve(curPath, args[0]);
           break;
         case "ls":
-          console.table(getTableData());
+          console.table(await getTableData(curPath));
           break;
-
+        case "cat":
+          logFileContent(resolve(curPath, args[0]));
+          break;
+        case 'add':
+            createFile(resolve(curPath, args[0]));
+            break;
         default:
           console.log("Invalid input");
           break;
@@ -43,10 +51,11 @@ const runManager = async () => {
     } catch {
       console.log("Operation failed");
     } finally {
-      console.log(`You are currently in ${curPath}`);
+        if (command !== '.exit') {
+            console.log(`You are currently in ${curPath}`);
+        }
+     
     }
-
-    console.log(curPath);
   });
 
   rl.on("close", () => {
