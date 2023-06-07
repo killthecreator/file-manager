@@ -1,0 +1,12 @@
+import {createHash} from 'crypto';
+import { readFile } from 'fs/promises';
+
+export const calcHash = async (path) => {
+    try {
+        const hash = createHash('sha256');
+        const data = await readFile(path, 'utf-8');
+         return hash.update(data).digest('hex');
+    } catch {
+        throw Error();
+    }
+};

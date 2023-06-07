@@ -1,4 +1,3 @@
-//npm run start -- --username=your_username
 import { createInterface } from "readline";
 import { resolve } from "path";
 
@@ -9,7 +8,14 @@ import {
   createFile,
   renameFile,
   getOSInfo,
-} from "./utils";
+  calcHash,
+  compressFile,
+  decompressFile,
+  copyFile,
+  deleteFile,
+  moveFile,
+  goToDir
+} from "./helpers";
 
 let curPath = homedir();
 
@@ -39,31 +45,40 @@ const runManager = async () => {
           curPath = resolve(curPath, "..");
           break;
         case "cd":
-          curPath = resolve(curPath, args[0]);
+          curPath = await goToDir(curPath, args[0]);
           break;
         case "ls":
           console.table(await getTableData(curPath));
           break;
         case "cat":
-          logFileContent(resolve(curPath, args[0]));
+          await logFileContent(resolve(curPath, args[0]));
           break;
         case "add":
-          createFile(resolve(curPath, args[0]));
+          await createFile(resolve(curPath, args[0]));
           break;
         case "rn":
-          renameFile(resolve(curPath, args[0]), resolve(curPath, args[1]));
+          await renameFile(resolve(curPath, args[0]), resolve(curPath, args[1]));
           break;
         case "cp":
-          console.log(1);
+          await copyFile(resolve(curPath, args[0]), resolve(curPath, args[1]));
           break;
         case "mv":
-          console.log(1);
+          await moveFile(resolve(curPath, args[0]), resolve(curPath, args[1]));
           break;
         case "rm":
-          console.log(1);
+          await deleteFile(args[0]);
           break;
         case "os":
           console.log(getOSInfo(args[0]));
+          break;
+        case "hash":
+          console.log(await calcHash(resolve(curPath, args[0])));
+          break;
+        case "compress":
+          console.log(await compressFile(resolve(curPath, args[0]), resolve(curPath, args[1])));
+          break;
+        case "decompress":
+          console.log(await decompressFile(resolve(curPath, args[0]), resolve(curPath, args[1])));
           break;
         default:
           console.log("Invalid input");
