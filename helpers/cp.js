@@ -1,9 +1,7 @@
-import { copyFile as copy } from "fs/promises";
+import { copyFile as copy, constants } from "fs/promises";
+import { basename, join } from "path";
 
 export const copyFile = async (path, newPath) => {
-  try {
-    await copy(path, newPath);
-  } catch (e) {
-    throw Error();
-  }
+  const copyFilePath = join(newPath, basename(path));
+  await copy(path, copyFilePath, constants.COPYFILE_EXCL);
 };

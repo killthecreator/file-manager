@@ -27,4 +27,3 @@ export const getTableData = async (curPath) => {
 
   return filesData;
 };
-

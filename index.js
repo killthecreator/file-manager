@@ -1,6 +1,5 @@
 import { createInterface } from "readline";
 import { resolve } from "path";
-
 import { homedir } from "os";
 import {
   getTableData,
@@ -14,7 +13,7 @@ import {
   copyFile,
   deleteFile,
   moveFile,
-  goToDir
+  goToDir,
 } from "./helpers";
 
 let curPath = homedir();
@@ -45,7 +44,7 @@ const runManager = async () => {
           curPath = resolve(curPath, "..");
           break;
         case "cd":
-          curPath = await goToDir(curPath, args[0]);
+          curPath = await goToDir(resolve(curPath, args[0]));
           break;
         case "ls":
           console.table(await getTableData(curPath));
@@ -54,10 +53,10 @@ const runManager = async () => {
           await logFileContent(resolve(curPath, args[0]));
           break;
         case "add":
-          await createFile(resolve(curPath, args[0]));
+          await createFile(curPath, args[0]);
           break;
         case "rn":
-          await renameFile(resolve(curPath, args[0]), resolve(curPath, args[1]));
+          await renameFile(resolve(curPath, args[0]), args[1]);
           break;
         case "cp":
           await copyFile(resolve(curPath, args[0]), resolve(curPath, args[1]));
@@ -66,7 +65,7 @@ const runManager = async () => {
           await moveFile(resolve(curPath, args[0]), resolve(curPath, args[1]));
           break;
         case "rm":
-          await deleteFile(args[0]);
+          await deleteFile(resolve(curPath, args[0]));
           break;
         case "os":
           console.log(getOSInfo(args[0]));
@@ -75,10 +74,16 @@ const runManager = async () => {
           console.log(await calcHash(resolve(curPath, args[0])));
           break;
         case "compress":
-          console.log(await compressFile(resolve(curPath, args[0]), resolve(curPath, args[1])));
+          await compressFile(
+            resolve(curPath, args[0]),
+            resolve(curPath, args[1])
+          );
           break;
         case "decompress":
-          console.log(await decompressFile(resolve(curPath, args[0]), resolve(curPath, args[1])));
+          await decompressFile(
+            resolve(curPath, args[0]),
+            resolve(curPath, args[1])
+          );
           break;
         default:
           console.log("Invalid input");

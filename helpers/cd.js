@@ -1,9 +1,6 @@
-import {access} from 'fs/promises';
-import {resolve} from 'path';
+import { isDir } from "../utils";
 
-export const goToDir = async (curPath, newPath) => {
-    await access(resolve(curPath, newPath));
-    return resolve(curPath, newPath);
-
-
+export const goToDir = async (path) => {
+  if (!(await isDir(path))) throw Error();   // Checking if path exists and it is a directory 
+  return path;
 };
