@@ -20,8 +20,8 @@ let curPath = homedir();
 
 const userNameArg = process.argv[2];
 const username =
-  userNameArg && userNameArg.startsWith("--username=")
-    ? userNameArg.replace("--username=", "")
+  userNameArg && userNameArg.startsWith("--username=") ?
+  userNameArg.replace("--username=", "")
     : "stranger";
 
 const { stdin: input, stdout: output } = process;
