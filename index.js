@@ -15,13 +15,14 @@ import {
   moveFile,
   goToDir,
 } from "./helpers";
+import { inputHandler } from "./utils";
 
 let curPath = homedir();
 
 const userNameArg = process.argv[2];
 const username =
-  userNameArg && userNameArg.startsWith("--username=") ?
-  userNameArg.replace("--username=", "")
+  userNameArg && userNameArg.startsWith("--username=")
+    ? userNameArg.replace("--username=", "")
     : "stranger";
 
 const { stdin: input, stdout: output } = process;
@@ -33,7 +34,8 @@ const runManager = async () => {
   const rl = createInterface({ input, output });
 
   rl.on("line", async (line) => {
-    const [command, ...args] = line.split(" ");
+    const [command, ...args] = inputHandler(line);
+    console.log(command);
 
     try {
       switch (command) {
