@@ -33,7 +33,7 @@ For one-word pathes dobule quotations are not required.**
 
 - Basic operations with files:
     - `cat path_to_file`: Reads file and prints it's content in console;
-    - `add new_file_name`: Creates empty file in current working directory (no exact path or file extension is required, just write a filename);
+    - `add new_file_name`: Creates empty file in current working directory (no exact path is required, just write a filename);
     - `rn path_to_file new_filename`: Renames file (for a new filename just provide a new name, no need to provide a path or extension);
     - `cp path_to_file path_to_new_directory`: Copies file from source path to destination directory;
     - `mv path_to_file path_to_new_directory`: Moves file from source path to destination directory;
