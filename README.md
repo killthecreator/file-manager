@@ -49,6 +49,6 @@ For one-word pathes dobule quotations are not required.
 - Hash calculation:
     - `hash path_to_file`: Calculates hash for file and prints it into console.
 
-- Compress and decompress operations:
+- Compress and decompress operations (`path_to_destination` is just a destination folder name, do not provide a filename here):
     - `compress path_to_file path_to_destination`: Compresses file using Brotli algorithm;
     - `decompress path_to_file path_to_destination`: Dempresses file using Brotli algorithm.
