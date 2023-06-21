@@ -19,9 +19,11 @@ To run the app you need to:
 
 # Commands description
 
-!!If you want to use pathes with spaces you need to wrap a path into double quoutation marks like this:
+** 
+If you want to use pathes with spaces you need to wrap a path into double quoutation marks like this:
 `cd "my complicated folder"`
 For one-word pathes dobule quotations are not required.
+**
 
 - Navigation & working directory:
     - `up`: Go upper from current directory;
