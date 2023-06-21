@@ -4,9 +4,10 @@ export const getOSInfo = (arg) => {
     case "--EOL":
       return JSON.stringify(EOL);
     case "--cpus":
+      const cpusData = cpus();
       return {
-        numberOfCores: cpus().length,
-        cores: cpus().map(core => ({model: core.model, clockRate: `${core.speed / 1000}GHz`}))
+        numberOfCores: cpusData.length,
+        cores: cpusData.map(core => ({model: core.model, clockRate: `${core.speed / 1000}GHz`}))
       };
     case "--homedir":
       return homedir();
