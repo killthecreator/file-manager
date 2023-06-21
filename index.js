@@ -35,8 +35,6 @@ const runManager = async () => {
 
   rl.on("line", async (line) => {
     const [command, ...args] = inputHandler(line);
-    console.log(command);
-
     try {
       switch (command) {
         case ".exit":
