@@ -1,4 +1,4 @@
-const restrictedChars = /[ `*:"\\|<>\/?]/;
+const restrictedChars = /[`*:"\\|<>\/?]/;
 const restrictedFilenames = [
   "CON",
   "PRN",

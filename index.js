@@ -15,6 +15,7 @@ import {
   moveFile,
   goToDir,
 } from "./helpers";
+import { inputHandler } from "./utils";
 
 let curPath = homedir();
 
@@ -33,8 +34,7 @@ const runManager = async () => {
   const rl = createInterface({ input, output });
 
   rl.on("line", async (line) => {
-    const [command, ...args] = line.split(" ");
-
+    const [command, ...args] = inputHandler(line);
     try {
       switch (command) {
         case ".exit":
